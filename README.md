@@ -1,7 +1,8 @@
 # Docker image for [Idris lang](http://www.idris-lang.org/)
 
 The image is available on dockerhub: [dgellow/idris](https://hub.docker.com/r/dgellow/idris/)
-Based on [_/haskell](https://hub.docker.com/r/_/haskell/), latest idris installed and compiled via cabal.
+
+Based on the [official haskell image](https://hub.docker.com/r/_/haskell/), latest idris installed and compiled via cabal.
 
 # Usage
 
