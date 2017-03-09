@@ -6,8 +6,10 @@ Based on the [official haskell image](https://hub.docker.com/r/_/haskell/), late
 
 ## Tags
 
-- `dgellow/idris:latest`: full haskell image + idris
-- `dgellow/idris:no-ghc_no-cabal`: haskell image + idris - cabal - haskell (save ~500Mo)
+- `dgellow/idris:latest`
+- `dgellow/idris:v0.99.1`
+- `dgellow/idris:v0.99`
+- `dgellow/idris:v0.12`
 
 ## Usage
 
