@@ -1,4 +1,4 @@
-FROM haskell
+FROM dgellow/idris-base:latest
 
 ARG VERSION
 

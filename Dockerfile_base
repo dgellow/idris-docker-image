@@ -1,0 +1,5 @@
+FROM haskell:8
+
+RUN apt-get update && apt-get -y install build-essential &&\
+    cabal update &&\
+    rm -rf /var/lib/apt/lists/*
