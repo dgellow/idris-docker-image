@@ -2,7 +2,7 @@ owner?=dgellow
 image?=idris
 base_image?=${owner}/${image}-base
 full_image?=${owner}/${image}
-versions?=0.12 0.99 0.99.1
+versions?=0.12.3 0.99 0.99.1 1.0
 
 release: clean build-base push-base build push clean
 
