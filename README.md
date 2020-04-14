@@ -7,6 +7,7 @@ Based on the [official haskell image](https://hub.docker.com/r/_/haskell/), late
 ## Tags
 
 - `dgellow/idris:latest`
+- `dgellow/idris:v1.3.2`
 - `dgellow/idris:v1.1.1`
 - `dgellow/idris:v1.0`
 - `dgellow/idris:v0.99.1`
