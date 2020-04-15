@@ -1,6 +1,6 @@
 # Docker image for [Idris lang](http://www.idris-lang.org/)
 
-![](https://img.shields.io/badge/docker%20image-dgellow%2Fidris-blue)
+![](https://img.shields.io/badge/image%20name-dgellow%2Fidris-blue)
 ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/dgellow/idris)
 ![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/dgellow/idris)
 
