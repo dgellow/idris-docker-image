@@ -1,8 +1,8 @@
 # Docker image for [Idris lang](http://www.idris-lang.org/)
 
-The image is available on dockerhub: [dgellow/idris](https://hub.docker.com/r/dgellow/idris/)
+Latest idris installed and compiled via cabal. Based on the [official haskell image](https://hub.docker.com/r/_/haskell/).
 
-Based on the [official haskell image](https://hub.docker.com/r/_/haskell/), latest idris installed and compiled via cabal.
+The image is available on dockerhub: [dgellow/idris](https://hub.docker.com/r/dgellow/idris/).
 
 ## Tags
 
@@ -32,4 +32,12 @@ WORKDIR /app
 
 RUN idris main.idr -o hello.o
 CMD ["/app/hello.o"]
+```
+
+## Build the image
+
+> Note: building idris can easily take **more than 30 minutes** depending on your machine and how much CPU/RAM is dedicated to docker
+
+```
+$ docker build -t dgellow/idris:v1.3.2 .
 ```
