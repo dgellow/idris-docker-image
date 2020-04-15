@@ -1,10 +1,8 @@
-# Docker image for [Idris lang](http://www.idris-lang.org/)
+# Docker image for [Idris lang](http://www.idris-lang.org/) ![](https://img.shields.io/badge/docker%20image-dgellow%2Fidris-blue) ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/dgellow/idris) ![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/dgellow/idris)
 
 Latest idris installed and compiled via cabal. Based on the [official haskell image](https://hub.docker.com/r/_/haskell/).
 
-Latest image version: ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/dgellow/idris) ![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/dgellow/idris)
-
-The image is available on dockerhub: [dgellow/idris](https://hub.docker.com/r/dgellow/idris/).
+The image is publicly available on Docker Hub: [dgellow/idris](https://hub.docker.com/r/dgellow/idris/).
 
 ## Tags
 
