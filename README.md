@@ -2,6 +2,8 @@
 
 Latest idris installed and compiled via cabal. Based on the [official haskell image](https://hub.docker.com/r/_/haskell/).
 
+Latest image version: ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/dgellow/idris) ![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/dgellow/idris)
+
 The image is available on dockerhub: [dgellow/idris](https://hub.docker.com/r/dgellow/idris/).
 
 ## Tags
