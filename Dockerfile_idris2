@@ -1,0 +1,14 @@
+FROM dgellow/idris:v1.3.2 as base
+
+ARG VERSION=v0.1.0
+
+WORKDIR /
+RUN apt-get update && apt-get -y install build-essential git clang
+RUN git clone https://github.com/edwinb/Idris2.git
+WORKDIR /Idris2
+RUN git checkout ${VERSION}
+RUN make install
+
+FROM ubuntu
+COPY --from=base /root/.idris2 /root/.idris2
+ENTRYPOINT ["/root/.idris2/bin/idris2"]
