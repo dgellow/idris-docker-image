@@ -28,6 +28,7 @@ Idris:
 Idris2:
 - `dgellow/idris2:latest`
 - `dgellow/idris2:v0.1.0`
+- `dgellow/idris2:v0.3.0`
 
 ## Usage
 
