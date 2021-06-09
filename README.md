@@ -11,7 +11,7 @@
 # Images
 
 - `dgellow/idris`: Published at https://hub.docker.com/r/dgellow/idris/. Latest idris installed and compiled via Cabal. Based on the [official haskell image](https://hub.docker.com/r/_/haskell/).
-- `dgellow/idris2`: Published at https://hub.docker.com/r/dgellow/idris2/ Build from source of [idris2](https://github.com/edwinb/Idris2).
+- `dgellow/idris2`: Published at https://hub.docker.com/r/dgellow/idris2/. Build from source of [idris2](https://github.com/edwinb/Idris2).
 
 ## Tags
 
