@@ -1,0 +1,4 @@
+ignored:
+  # apt packages are not version-pinned: Debian drops superseded versions from
+  # its archive, which would break the build on every point release.
+  - DL3008
