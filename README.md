@@ -1,22 +1,39 @@
-# Docker images for [Idris lang](http://www.idris-lang.org/) and [Idris2](https://github.com/edwinb/Idris2)
-
-![](https://img.shields.io/badge/image-dgellow%2Fidris-blue)
-![Docker Image Version (latest semver)](https://img.shields.io/docker/v/dgellow/idris)
-![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/dgellow/idris)
+# Docker images for [Idris](https://www.idris-lang.org/) and [Idris 2](https://github.com/idris-lang/Idris2)
 
 ![](https://img.shields.io/badge/image-dgellow%2Fidris2-blue)
 ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/dgellow/idris2)
 ![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/dgellow/idris2)
 
-# Images
+![](https://img.shields.io/badge/image-dgellow%2Fidris-blue)
+![Docker Image Version (latest semver)](https://img.shields.io/docker/v/dgellow/idris)
+![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/dgellow/idris)
 
-- `dgellow/idris`: Published at https://hub.docker.com/r/dgellow/idris/. Latest idris installed and compiled via Cabal. Based on the [official haskell image](https://hub.docker.com/r/_/haskell/).
-- `dgellow/idris2`: Published at https://hub.docker.com/r/dgellow/idris2/. Build from source of [idris2](https://github.com/edwinb/Idris2).
+## Images
+
+| Image | Source | Contents |
+| --- | --- | --- |
+| [`dgellow/idris2`](https://hub.docker.com/r/dgellow/idris2/) | [`idris2/Dockerfile`](idris2/Dockerfile) | [Idris 2](https://github.com/idris-lang/Idris2) bootstrapped from source with Chez Scheme, on `debian:trixie-slim`. |
+| [`dgellow/idris`](https://hub.docker.com/r/dgellow/idris/) | [`idris/Dockerfile`](idris/Dockerfile) | [Idris 1](https://github.com/idris-lang/Idris-dev) built from [Hackage](https://hackage.haskell.org/package/idris) with GHC 8.8, on `debian:bookworm-slim`. Idris 1 is no longer developed upstream. |
+
+Both are multi-stage builds: the final image only holds the compiler, its
+libraries and what it needs to produce executables.
+
+- `dgellow/idris2` ships Chez Scheme, the default code generator. The RefC
+  backend additionally needs `gcc` and `libgmp-dev`, the Racket, Gambit and
+  Node backends need their respective runtimes.
+- `dgellow/idris` ships `gcc` for the C backend.
 
 ## Tags
 
+Idris 2:
+- `dgellow/idris2:latest`
+- `dgellow/idris2:v0.8.0`
+- `dgellow/idris2:v0.3.0`
+- `dgellow/idris2:v0.1.0`
+
 Idris:
 - `dgellow/idris:latest`
+- `dgellow/idris:v1.3.4`
 - `dgellow/idris:v1.3.3`
 - `dgellow/idris:v1.3.2`
 - `dgellow/idris:v1.1.1`
@@ -25,40 +42,60 @@ Idris:
 - `dgellow/idris:v0.99`
 - `dgellow/idris:v0.12.3`
 
-Idris2:
-- `dgellow/idris2:latest`
-- `dgellow/idris2:v0.1.0`
-- `dgellow/idris2:v0.3.0`
-
 ## Usage
 
-From the cli:
+The compiler is the entrypoint of both images:
 
 ```
-$ docker run -it dgellow/idris --help
+$ docker run --rm -it dgellow/idris2 --version
+$ docker run --rm -it -v "$PWD:/app" -w /app dgellow/idris2 Main.idr
 ```
 
-From a `Dockerfile`:
+From a `Dockerfile`, Idris 2:
 
+```dockerfile
+FROM dgellow/idris2
+
+WORKDIR /app
+COPY . .
+
+RUN idris2 Main.idr -o hello
+ENTRYPOINT ["/app/build/exec/hello"]
 ```
+
+Idris 1:
+
+```dockerfile
 FROM dgellow/idris
 
-ADD . /app
 WORKDIR /app
+COPY . .
 
-RUN idris main.idr -o hello.o
-CMD ["/app/hello.o"]
+RUN idris Main.idr -o hello
+ENTRYPOINT ["/app/hello"]
 ```
 
-## Build the image
+## Build the images
 
-> Note: building idris can easily take **more than 30 minutes** depending on your machine and how much CPU/RAM is dedicated to docker
+Requires Docker with BuildKit (the default builder since Docker 23).
 
 ```
-$ docker build -t dgellow/idris:v1.3.2 .
+$ docker build -t dgellow/idris2:v0.8.0 idris2
+$ docker build -t dgellow/idris:v1.3.4 idris
 ```
 
-To build idris2 (also quite a long process)
-```
-$ docker build -t dgellow/idris2:v0.1.0 -f Dockerfile_idris2 .
-```
+Bootstrapping Idris 2 takes around 15 minutes, compiling Idris 1 and its
+Haskell dependencies can take more than 30 minutes.
+
+Build arguments:
+
+| Dockerfile | Argument | Default | |
+| --- | --- | --- | --- |
+| `idris2` | `IDRIS2_VERSION` | `v0.8.0` | Git tag, branch or commit of [idris-lang/Idris2](https://github.com/idris-lang/Idris2) |
+| `idris2` | `DEBIAN_VERSION` | `trixie` | Debian release of both stages |
+| `idris` | `IDRIS_VERSION` | `1.3.4` | Version on Hackage |
+| `idris` | `GHC_VERSION` | `8.8.4` | GHC used for the build |
+| `idris` | `CABAL_VERSION` | `3.16.1.0` | cabal-install used for the build |
+| `idris` | `GHCUP_VERSION` | `0.2.6.2` | GHCup used to install GHC and cabal |
+| `idris` | `HACKAGE_INDEX_STATE` | `2021-10-31T00:00:00Z` | Hackage snapshot used to resolve dependencies |
+| `idris` | `DEBIAN_VERSION` | `bookworm` | Debian release of both stages |
