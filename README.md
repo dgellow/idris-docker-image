@@ -1,5 +1,7 @@
 # Docker images for [Idris](https://www.idris-lang.org/) and [Idris 2](https://github.com/idris-lang/Idris2)
 
+[![Build](https://github.com/dgellow/idris-docker-image/actions/workflows/build.yml/badge.svg)](https://github.com/dgellow/idris-docker-image/actions/workflows/build.yml)
+
 ![](https://img.shields.io/badge/image-dgellow%2Fidris2-blue)
 ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/dgellow/idris2)
 ![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/dgellow/idris2)
@@ -12,8 +14,8 @@
 
 | Image | Source | Contents |
 | --- | --- | --- |
-| [`dgellow/idris2`](https://hub.docker.com/r/dgellow/idris2/) | [`idris2/Dockerfile`](idris2/Dockerfile) | [Idris 2](https://github.com/idris-lang/Idris2) bootstrapped from source with Chez Scheme, on `debian:trixie-slim`. |
-| [`dgellow/idris`](https://hub.docker.com/r/dgellow/idris/) | [`idris/Dockerfile`](idris/Dockerfile) | [Idris 1](https://github.com/idris-lang/Idris-dev) built from [Hackage](https://hackage.haskell.org/package/idris) with GHC 8.8, on `debian:bookworm-slim`. Idris 1 is no longer developed upstream. |
+| [`dgellow/idris2`](https://hub.docker.com/r/dgellow/idris2/) | [`idris2/Dockerfile`](idris2/Dockerfile) | [Idris 2](https://github.com/idris-lang/Idris2) bootstrapped from source with Chez Scheme, on `debian:trixie-slim`. `linux/amd64` and `linux/arm64`. |
+| [`dgellow/idris`](https://hub.docker.com/r/dgellow/idris/) | [`idris/Dockerfile`](idris/Dockerfile) | [Idris 1](https://github.com/idris-lang/Idris-dev) built from [Hackage](https://hackage.haskell.org/package/idris) with GHC 8.8, on `debian:bookworm-slim`. `linux/amd64` only. Idris 1 is no longer developed upstream. |
 
 Both are multi-stage builds: the final image only holds the compiler, its
 libraries and what it needs to produce executables.
@@ -99,3 +101,30 @@ Build arguments:
 | `idris` | `GHCUP_VERSION` | `0.2.6.2` | GHCup used to install GHC and cabal |
 | `idris` | `HACKAGE_INDEX_STATE` | `2021-10-31T00:00:00Z` | Hackage snapshot used to resolve dependencies |
 | `idris` | `DEBIAN_VERSION` | `bookworm` | Debian release of both stages |
+
+## Tests
+
+`tests/smoke.sh` checks the version an image reports, then compiles and runs a
+small program in it:
+
+```
+$ tests/smoke.sh idris2 dgellow/idris2:v0.8.0 v0.8.0
+$ tests/smoke.sh idris dgellow/idris:v1.3.4 v1.3.4
+```
+
+## CI
+
+[`.github/workflows/build.yml`](.github/workflows/build.yml) lints the
+Dockerfiles with [hadolint](https://github.com/hadolint/hadolint), builds both
+images and runs the smoke test on every pull request, on every push to
+`master`, and once a week from scratch.
+
+Runs on `master` also push to Docker Hub once these are set in the repository
+settings:
+
+- variable `DOCKERHUB_USERNAME`
+- secret `DOCKERHUB_TOKEN`, a Docker Hub access token with write access
+
+The pushed tags are `v<version>` and `latest`, where the version is the default
+of `IDRIS2_VERSION` / `IDRIS_VERSION` in the Dockerfile. Releasing a new
+version is a change of that default.
